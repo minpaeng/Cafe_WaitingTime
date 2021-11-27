@@ -76,5 +76,3 @@ def modef_stock():
 
 
 modef_stock()
-
-# applekoong@naver.com
