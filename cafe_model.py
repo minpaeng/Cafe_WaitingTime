@@ -5,13 +5,6 @@ import tensorflow.keras as keras
 from sklearn import preprocessing, model_selection
 import matplotlib.pyplot as plt
 
-
-# 퀴즈 1
-# stock_daily.csv 파일로부터 x, y를 반환하는 함수를 만드세요
-# batch_size, seq_length, n_features = 32, 7, 5
-
-# 퀴즈 2
-# 80%의 데이터로 학습하고 20%의 데이터에 대해 결과를 예측하세요
 def get_xy():
     cafe = pd.read_csv('data/cafe2.csv')
     cafe = cafe.iloc[:, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13]]
@@ -32,10 +25,8 @@ def get_xy():
     return x, y, scaler.data_min_[-1], scaler.data_max_[-1]
 
 
-# 퀴즈
-# 앞에서 만든 데이터에 대해 모델을 구축하세요
 def model_cafe():
-    x, y, data_min, data_max = get_xy()  # 최대 최소값을 이용, 계산해 원래의 값으로 복구시킨다
+    x, y, data_min, data_max = get_xy()  # 최대 최소값을 이용, 계산해 원래의 값으로 복구시킴
 
     data = model_selection.train_test_split(x, y, train_size=0.8, shuffle=False)
     x_train, x_test, y_train, y_test = data
@@ -60,9 +51,9 @@ def model_cafe():
     # print((data_max - data_min) * p + data_min)
 
     plt.subplot(1, 2, 1)
-    plt.plot(y_test, 'r', label='target')  # 데이터를 섞어서 시각화가 제대로 되지 않음 # 셔플옵션  false로 주고오기
+    plt.plot(y_test, 'r', label='target')
     plt.plot(p, 'g', label='prediction')
-    plt.legend()  # label 값을 표에 표시할수있다
+    plt.legend()  # label 값을 표에 표시
 
     p = (data_max - data_min) * p + data_min
 
