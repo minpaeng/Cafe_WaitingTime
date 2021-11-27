@@ -34,7 +34,7 @@ def get_xy():
 
 # 퀴즈
 # 앞에서 만든 데이터에 대해 모델을 구축하세요
-def modef_stock():
+def model_cafe():
     x, y, data_min, data_max = get_xy()  # 최대 최소값을 이용, 계산해 원래의 값으로 복구시킨다
 
     data = model_selection.train_test_split(x, y, train_size=0.8, shuffle=False)
@@ -52,27 +52,28 @@ def modef_stock():
                   loss=keras.losses.mse,
                   metrics='mse')
 
-    model.fit(x_train, y_train, epochs=100, verbose=2, batch_size=32)
+    model.fit(x_train, y_train, epochs=500, verbose=2, batch_size=32)
     model.evaluate(x_test, y_test, verbose=2)
 
-    p = model.predict(x_train)
-    print(p.shape, x_train.shape)
-    print((data_max - data_min) * p + data_min)
+    p = model.predict(x_test)
+    # print(p.shape, x_train.shape)
+    # print((data_max - data_min) * p + data_min)
 
     plt.subplot(1, 2, 1)
-    plt.plot(y_train, 'r', label='target')  # 데이터를 섞어서 시각화가 제대로 되지 않음 # 셔플옵션  false로 주고오기
+    plt.plot(y_test, 'r', label='target')  # 데이터를 섞어서 시각화가 제대로 되지 않음 # 셔플옵션  false로 주고오기
     plt.plot(p, 'g', label='prediction')
     plt.legend()  # label 값을 표에 표시할수있다
 
     p = (data_max - data_min) * p + data_min
-    # print((data_max-data_min)*p+data_min)
-    y_train = (data_max - data_min) * y_train + data_min
+
+    y_test = (data_max - data_min) * y_test + data_min
 
     plt.subplot(1, 2, 2)
-    plt.plot(y_train, 'r')  # 데이터를 섞어서 시각화가 제대로 되지 않음 # 셔플옵션  false로 주고오기
+    plt.plot(y_test, 'r')
     plt.plot(p, 'g')
-    # plt.ylim(2650, 3000)
     plt.show()
 
+    # model.save("cafe_model2.h5")
 
-modef_stock()
+
+model_cafe()
