@@ -5,15 +5,16 @@ import tensorflow.keras as keras
 from sklearn import preprocessing, model_selection
 import matplotlib.pyplot as plt
 
+
 def get_xy():
     cafe = pd.read_csv('data/cafe2.csv')
     cafe = cafe.iloc[:, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13]]
-    print(cafe)
+    # print(cafe)
 
     scaler = preprocessing.MinMaxScaler()  # 최소, 최대 범위를 0~1로
     values = scaler.fit_transform(cafe.values)
 
-    grams = list(nltk.ngrams(values, 2))
+    grams = list(nltk.ngrams(values, 5))
     grams = np.float32(grams)
     # print(grams.shape)
 
@@ -47,9 +48,9 @@ def model_cafe():
     model.evaluate(x_test, y_test, verbose=2)
 
     p = model.predict(x_test)
-    # print(p.shape, x_train.shape)
-    # print((data_max - data_min) * p + data_min)
-
+    print(p.shape, x_train.shape)
+    print((data_max - data_min) * p + data_min)
+    print(p)
     plt.subplot(1, 2, 1)
     plt.plot(y_test, 'r', label='target')
     plt.plot(p, 'g', label='prediction')
@@ -64,7 +65,7 @@ def model_cafe():
     plt.plot(p, 'g')
     plt.show()
 
-    # model.save("cafe_model2.h5")
+    # model.save("cafe_model3.h5")
 
 
 model_cafe()

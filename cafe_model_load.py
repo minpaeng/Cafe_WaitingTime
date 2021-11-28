@@ -4,6 +4,7 @@ import tensorflow.keras as keras
 from sklearn import preprocessing, model_selection
 import matplotlib.pyplot as plt
 
+
 def get_xy():
     cafe = pd.read_csv('data/cafe2.csv')
     cafe = cafe.iloc[:, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13]]
@@ -31,14 +32,10 @@ values = scaler.transform([[1, 0, 4, 4, 4, 0, 1, 0, 14, 2, 1, 0]])
 
 p = model.predict(x_test)
 print((data_max - data_min) * p + data_min)
-plt.subplot(1, 2, 1)
-plt.plot(y_test, 'r', label='target')
-plt.plot(p, 'g', label='prediction')
-plt.legend()  # label 값을 표에 표시
 
 p = (data_max - data_min) * p + data_min
 y_test = (data_max - data_min) * y_test + data_min
-plt.subplot(1, 2, 2)
-plt.plot(y_test, 'r')
-plt.plot(p, 'g')
+plt.plot(y_test, 'r', label='target')
+plt.plot(p, 'g', label='prediction')
+plt.legend()  # label 값을 표에 표시
 plt.show()
